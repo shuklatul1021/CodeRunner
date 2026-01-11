@@ -1,9 +1,10 @@
 import { Router } from "express";
 import { Sandbox } from '@e2b/code-interpreter';
 import { ComilerRateLimiter } from "../limiter/RateLimiter.js";
+import { APICheckMiddleware, AuthMiddleware } from "../middleware/middleware.js";
 const compilerRouter = Router();
 
-compilerRouter.post("/run", ComilerRateLimiter , async (req, res) => {
+compilerRouter.post("/run", ComilerRateLimiter , AuthMiddleware , APICheckMiddleware , async (req, res) => {
     try {
         const { code, language, input } = req.body;
         
